@@ -1,3 +1,6 @@
+# Generated datasets
+data/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
@@ -153,6 +156,7 @@ activemq-data/
 .venv
 env/
 venv/
+venv-*/
 ENV/
 env.bak/
 venv.bak/
