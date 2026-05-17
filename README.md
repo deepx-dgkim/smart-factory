@@ -51,7 +51,30 @@ YOLO26 segmentation 학습에는 `dataset.yaml`을 사용하면 됩니다.
 yolo segment train data=data/synthetic_deepx_can_seg/dataset.yaml model=yolo26n-seg.pt imgsz=1280 epochs=100
 ```
 
-옵션 예시:
+### Export ONNX
+
+학습이 끝나면 기본적으로 `runs/segment/train/weights/best.pt`가 생성됩니다. 이 모델을 ONNX로 export하려면 다음 스크립트를 사용합니다.
+
+```bash
+python scripts/export_yolo_seg_to_onnx.py \
+  --weights runs/segment/train/weights/best.pt \
+  --output exports/deepx_can_yolo26_seg.onnx
+```
+
+ONNX export는 배포 호환성을 위해 batch size를 `1`로 고정합니다. 스크립트 내부에서 `batch=1`, `dynamic=False`를 강제하고, export 후 ONNX graph input의 첫 번째 dimension이 실제로 `1`인지 검증합니다.
+
+Export 옵션 예시:
+
+```bash
+python scripts/export_yolo_seg_to_onnx.py \
+  --weights runs/segment/train/weights/best.pt \
+  --output exports/ \
+  --imgsz 1280 \
+  --device cpu \
+  --overwrite
+```
+
+Generate 옵션 예시:
 
 ```bash
 python scripts/generate_synthetic_can_defects.py \
